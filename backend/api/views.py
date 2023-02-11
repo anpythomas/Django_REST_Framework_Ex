@@ -1,19 +1,20 @@
 import json
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
 
-def api_home(request, *args, **kwargs):
+from products.models import Product
 
-    body = request.body # byte string of JSON data
+def api_home(request, *args, **kwargs):
+    model_data = Product.objects.all().order_by("?").first()
     data = {}
-    try:
-        data = json.loads(body) # takes string of JSON data and converts to Python Dict
-    except:
-        pass
-    print(data)
-    # data['headers'] = request.headers
-    # print(request.headers)
-    print(request.GET) # to get url query params
-    data['params'] = dict(request.GET)
-    data['headers'] = dict(request.headers)
-    data['content_type'] = request.content_type
+    if model_data:
+        data['id'] = model_data.id
+        data['title'] = model_data.content
+        data['content'] = model_data.content
+        data['price'] = model_data.price
+        ## Serialization
+        # model instance (model_data)
+        # turn a Python dict
+        # return JSON to my client
+
     return JsonResponse(data)

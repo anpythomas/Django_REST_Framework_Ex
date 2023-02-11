@@ -5,11 +5,9 @@ import requests
 endpoint = "http://127.0.0.1:8000/api/"
 
 
-get_reponse = requests.get(endpoint, json={"query": "Hello world"})
+get_reponse = requests.get(endpoint, json={"product_id": 123})
 # print(get_reponse.text)
 # print(get_reponse.status_code)
-
-
 
 print(get_reponse.json())
 # print(get_reponse.status_code)
